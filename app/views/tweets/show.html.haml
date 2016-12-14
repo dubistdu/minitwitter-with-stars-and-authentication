@@ -1,0 +1,14 @@
+.page-header
+  = link_to tweets_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_tweet_path(@tweet), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show tweet
+
+%dl.dl-horizontal
+  %dt Text:
+  %dd= @tweet.text
+  %dt User name:
+  %dd= @tweet.user_name
