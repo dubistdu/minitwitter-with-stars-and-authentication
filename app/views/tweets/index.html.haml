@@ -14,14 +14,14 @@
               %span.waybackwhen
                 = distance_of_time_in_words_to_now(tweet.created_at)
               = link_to tweet.text
-              = link_to upvote_tweet_path(tweet) do
-                -# link_to "<i class='fa fa-chevron-up' aria-hidden='true'>", upvote_tweet_path(tweet)
+              = link_to star_tweet_path(tweet) do
+                -# link_to "<i class='fa fa-chevron-up' aria-hidden='true'>", upstar_tweet_path(tweet)
                 %i.fa.fa-star{"aria-hidden" => "true"}
-              -# = link_to downvote_tweet_path(tweet) do
-              -#   -# link_to "<i class='fa fa-chevron-up' aria-hidden='true'>", upvote_tweet_path(tweet)
+              -# = link_to downstar_tweet_path(tweet) do
+              -#   -# link_to "<i class='fa fa-chevron-up' aria-hidden='true'>", upstar_tweet_path(tweet)
               -#   %i.fa.fa-star-o{"aria-hidden" => "true"}
-              = tweet.upvote_count
-              -# = tweet.downvote_count
+              = tweet.stars.count
+              -# = tweet.downstar_count
               -# %em
               -#   Net Value:
               -#   = tweet.net  cmd+ / for comment out

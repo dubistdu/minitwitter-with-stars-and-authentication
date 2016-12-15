@@ -52,27 +52,17 @@ class TweetsController < ApplicationController
     redirect_to tweets_url, notice: 'Tweet was successfully destroyed.'
   end
 
-  # upvote
-  def upvote
+  # upstar
+  def star
     @tweet = Tweet.find(params[:id])
-    if @tweet.not_already_voted?(current_user)
-      # if @tweet.votes.where(user: current_user, upvote: true).count == 0 # ref video 31:00 / 43:00
-      @tweet.votes.create(upvote: true, user: current_user)
+    if @tweet.not_already_stared?(current_user)
+      # if @tweet.stars.where(user: current_user, upstar: true).count == 0 # ref video 31:00 / 43:00
+      @tweet.stars.create(user: current_user)
       redirect_to tweets_path
     else
       redirect_to tweets_path, notice: "You've already starred"
     end
   end
-
-  # def downvote
-  #   @tweet = Tweet.find(params[:id])
-  #   if @tweet.votes.where(user: current_user, upvote: false).count == 0 # ref video 31:00
-  #     @tweet.votes.create(upvote: false, user: current_user)
-  #     redirect_to tweets_path
-  # end
-  #
-  #
-  # end
 
   private
     # Only allow a trusted parameter "white list" through.
