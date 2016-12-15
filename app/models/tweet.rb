@@ -15,4 +15,8 @@ class Tweet < ApplicationRecord
   def net
     (upvote_count - downvote_count)
   end
+
+  def not_already_voted?(user)
+    votes.where(user: user).count == 0  # user: user  ->   hash
+  end
 end

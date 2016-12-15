@@ -1,4 +1,8 @@
 class TweetsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+  # long form -> before_action :authenticate_user!, { :except => [:index] }
+  # It is referring to the index action (method in the controller)
+  # It's in hash form Because we can list multiple actions to exclude
   # GET /tweets
   def index
     @tweets = Tweet.all.order("created_at DESC")
@@ -22,6 +26,7 @@ class TweetsController < ApplicationController
   # POST /tweets
   def create
     @tweet = Tweet.new(tweet_params)
+    # @tweet.email = current_user.email
 
     if @tweet.save
       redirect_to @tweet, notice: 'Tweet was successfully created.'
@@ -50,17 +55,24 @@ class TweetsController < ApplicationController
   # upvote
   def upvote
     @tweet = Tweet.find(params[:id])
-    @tweet.votes.create(upvote: true)
-
-    redirect_to tweets_path
+    if @tweet.not_already_voted?(current_user)
+      # if @tweet.votes.where(user: current_user, upvote: true).count == 0 # ref video 31:00 / 43:00
+      @tweet.votes.create(upvote: true, user: current_user)
+      redirect_to tweets_path
+    else
+      redirect_to tweets_path, notice: "You've already starred"
+    end
   end
 
-  def downvote
-    @tweet = Tweet.find(params[:id])
-    @tweet.votes.create(upvote: false)
-
-    redirect_to tweets_path
-  end
+  # def downvote
+  #   @tweet = Tweet.find(params[:id])
+  #   if @tweet.votes.where(user: current_user, upvote: false).count == 0 # ref video 31:00
+  #     @tweet.votes.create(upvote: false, user: current_user)
+  #     redirect_to tweets_path
+  # end
+  #
+  #
+  # end
 
   private
     # Only allow a trusted parameter "white list" through.
