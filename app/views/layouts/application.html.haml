@@ -25,10 +25,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to "#", class: "navbar-brand" do
-            Minitwitter
+          = link_to "#", class: "navbar-brand, birdlogo" do
+            = image_tag("twit.png", size: "90x90")
+
         #navbar.collapse.navbar-collapse
-          %ul.nav.navbar-nav
+          %ul.nav.navbar-nav.listbody
             %li.active
               = link_to "Home", root_path
             %li
@@ -40,12 +41,12 @@
               %li
                 %p.navbar-text
                   = current_user.email
-            %li
-              - if user_signed_in?
-                = link_to "LogOut", destroy_user_session_path, method: :delete
-              - else
-                = link_to "LogIn", new_user_session_path
-    .container
+              %li
+                - if user_signed_in?
+                  = link_to "LogOut", destroy_user_session_path, method: :delete
+                - else
+                  = link_to "LogIn", new_user_session_path
+    .container.listpadding
       - flash.each do |name, msg|
         = content_tag :div, class: "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do
           %button.close{type: "button", data: {dismiss: "alert"} }
